@@ -1,0 +1,10 @@
+{
+  "conformal_width_90": 0.15,
+  "topologies_seen": ["line", "ring", "smallworld"],
+  "bounds": {
+    "J": [0.05, 0.4],
+    "gamma": [0.005, 0.05],
+    "sigma": [0.0, 0.08]
+  }
+}
+
