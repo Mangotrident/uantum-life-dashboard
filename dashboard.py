@@ -1,3 +1,11 @@
+import os
+from train_model import train_and_save_model
+
+if not os.path.exists("model.pkl"):
+    st.warning("Training model from embedded Phase 3 pipeline... please wait ⏳")
+    train_and_save_model("phase2_benchmark_results.csv")
+    st.success("Model rebuilt successfully ✅")
+
 import json, joblib, pandas as pd, numpy as np
 import streamlit as st
 
