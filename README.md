@@ -1,1 +1,1 @@
-# uantum-life-dashboard
+# Quantum-life-dashboard
