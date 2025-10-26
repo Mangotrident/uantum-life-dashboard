@@ -24,7 +24,6 @@ async def compute_qls_api(file: UploadFile = File(...)):
     Ensures the QLS is scaled between 0 and 1, returning both the score and components.
     """
     try:
-        # Load numpy data from uploaded .npz or .npy file
         contents = await file.read()
         data = np.load(io.BytesIO(contents))
         rho_series = [data[k] for k in data.files]
@@ -33,23 +32,22 @@ async def compute_qls_api(file: UploadFile = File(...)):
         qls_raw, comps = compute_qls(rho_series)
 
         # === NORMALIZATION FIX ===
-        # Adjust these min/max based on your training data or theoretical range
-        QLS_MIN, QLS_MAX = 0.0, 3.0   # assuming your raw QLS ranged roughly 0–3
-        qls_norm = (qls_raw - QLS_MIN) / (QLS_MAX - QLS_MIN)
-        qls_norm = max(0.0, min(1.0, qls_norm))  # clamp to [0,1]
+        # Your raw numbers are about 0–3, so normalize by that range
+        qls_norm = float(qls_raw) / 3.0
+        qls_norm = max(0.0, min(1.0, qls_norm))  # Clamp to [0, 1]
 
-        # 90% prediction interval (±0.15, also clamped)
+        # Prediction interval ±0.15, clamped
         interval = [
             max(0.0, qls_norm - 0.15),
             min(1.0, qls_norm + 0.15)
         ]
 
-      return {
-    "QLS": float(qls_norm),
-    "interval": interval,
-    "components": comps
-}
-
+        return {
+            "QLS": qls_norm,
+            "interval": interval,
+            "components": comps,
+            "debug_raw": qls_raw  # optional: to verify scaling
+        }
 
     except Exception as e:
         return {"error": f"Failed to compute QLS: {str(e)}"}
