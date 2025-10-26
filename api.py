@@ -1,6 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
 import numpy as np, io
-from qli.metrics import compute_qls
 
 app = FastAPI(title="Quantum Life Cloud API")
 
