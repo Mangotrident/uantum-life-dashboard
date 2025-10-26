@@ -4,3 +4,7 @@ numpy
 joblib
 xgboost
 scikit-learn==1.5.2
+fastapi
+uvicorn
+scipy
+qutip
