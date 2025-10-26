@@ -44,11 +44,12 @@ async def compute_qls_api(file: UploadFile = File(...)):
             min(1.0, qls_norm + 0.15)
         ]
 
-        return {
-            "QLS": float(qls_norm),
-            "interval": interval,
-            "components": comps
-        }
+      return {
+    "QLS": float(qls_norm),
+    "interval": interval,
+    "components": comps
+}
+
 
     except Exception as e:
         return {"error": f"Failed to compute QLS: {str(e)}"}
